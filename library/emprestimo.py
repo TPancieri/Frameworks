@@ -1,10 +1,10 @@
-from peewee import CharField, DateTimeField, ForeignKeyField, SQL
+from peewee import AutoField, CharField, DateTimeField, ForeignKeyField, SQL
 from library.config import ModeloBase
 from library.livro import Livro
 from library.usuario import Usuario
 
 class Emprestimo(ModeloBase):
-    id = CharField(primary_key=True)
+    id = AutoField() 
     livro = ForeignKeyField(Livro, backref='emprestimos', on_delete='CASCADE')
     usuario = ForeignKeyField(Usuario, backref='emprestimos', on_delete='CASCADE')
     data_emprestimo = DateTimeField(constraints=[SQL('DEFAULT CURRENT_TIMESTAMP')])
