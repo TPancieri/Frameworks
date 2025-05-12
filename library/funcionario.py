@@ -58,23 +58,31 @@ class Funcionario(Usuario):
                 raise ValueError("Livro não encontrado.")
     
     def registrar_emprestimo(self, id_usuario, isbn):
-        usuario = Usuario.get_by_id(id_usuario)
-        livro = Livro.get(Livro.isbn == isbn)
+        livro = Livro.get_or_none(Livro.isbn == isbn)
+        usuario = Cliente.get_or_none(Cliente.id == id_usuario)
 
+        if not livro or not usuario:
+            raise ValueError("Livro ou usuário não encontrado.")
         if not livro.disponivel:
-            raise Exception("Livro já está emprestado.")
+            raise ValueError("Livro já está emprestado.")
 
         Emprestimo.create(livro=livro, usuario=usuario)
-        self.atualizar_status_livro(isbn, False)
-        
-    def registrar_devolucao(self, id_emprestimo):
-        emprestimo = Emprestimo.get_by_id(id_emprestimo)
+        livro.disponivel = False
+        livro.save()
 
+    def registrar_devolucao(self, id_emprestimo):
+        emprestimo = Emprestimo.get_or_none(Emprestimo.id == id_emprestimo)
+        if not emprestimo:
+            raise ValueError("Empréstimo não encontrado.")
         if emprestimo.status == 'devolvido':
-            raise Exception("Livro já foi devolvido.")
+            raise ValueError("Esse livro já foi devolvido.")
 
         emprestimo.status = 'devolvido'
         emprestimo.data_devolucao = datetime.now()
         emprestimo.save()
 
-        self.atualizar_status_livro(emprestimo.livro.isbn, True)
+        livro = emprestimo.livro
+        livro.disponivel = True
+        livro.save()
+
+#TODO mudar logica de emprestimo, mostrar qual livro esta com quem no listar livros e quais livros alguem tem no listar clientes, nao fazer atualizacao por ID de emprestimo mas por alguma outra coisa (ISBN?)
