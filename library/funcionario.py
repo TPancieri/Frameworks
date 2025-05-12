@@ -1,6 +1,8 @@
 from .usuario import Usuario
 from .cliente import Cliente
 from .livro import Livro
+from .emprestimo import Emprestimo
+from datetime import datetime
 from peewee import *
 
 class Funcionario(Usuario):
@@ -46,3 +48,33 @@ class Funcionario(Usuario):
 
     def deletar_livro(self, isbn):
         return Livro.delete().where(Livro.isbn == isbn).execute()
+    
+    def atualizar_status_livro(self, isbn, disponivel):
+            livro = Livro.get_or_none(Livro.isbn == isbn)
+            if livro:
+                livro.disponivel = disponivel
+                livro.save()
+            else:
+                raise ValueError("Livro não encontrado.")
+    
+    def registrar_emprestimo(self, id_usuario, isbn):
+        usuario = Usuario.get_by_id(id_usuario)
+        livro = Livro.get(Livro.isbn == isbn)
+
+        if not livro.disponivel:
+            raise Exception("Livro já está emprestado.")
+
+        Emprestimo.create(livro=livro, usuario=usuario)
+        self.atualizar_status_livro(isbn, False)
+        
+    def registrar_devolucao(self, id_emprestimo):
+        emprestimo = Emprestimo.get_by_id(id_emprestimo)
+
+        if emprestimo.status == 'devolvido':
+            raise Exception("Livro já foi devolvido.")
+
+        emprestimo.status = 'devolvido'
+        emprestimo.data_devolucao = datetime.now()
+        emprestimo.save()
+
+        self.atualizar_status_livro(emprestimo.livro.isbn, True)
