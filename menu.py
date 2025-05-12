@@ -1,7 +1,9 @@
+# menus.py
 import os
 from crud_funcionarios import (
     listar_livros, cadastrar_livro, atualizar_livro, deletar_livro,
-    listar_clientes, cadastrar_cliente, atualizar_cliente, deletar_cliente
+    listar_clientes, cadastrar_cliente, atualizar_cliente, deletar_cliente, 
+    emprestar_livro, devolver_livro
 )
 
 def menu_funcionario():
@@ -14,6 +16,8 @@ def menu_funcionario():
         "6": cadastrar_cliente,
         "7": atualizar_cliente,
         "8": deletar_cliente,
+        "9": emprestar_livro,
+        "10": devolver_livro,
         "0": lambda: print("Saindo do menu funcionário...")
     }
 
@@ -28,6 +32,8 @@ def menu_funcionario():
         print("6. Cadastrar cliente")
         print("7. Atualizar cliente")
         print("8. Deletar cliente")
+        print("9. Emprestar livro")
+        print("10. Devolver livro")
         print("0. Sair")
 
         opcao = input("Escolha uma opção: ")
