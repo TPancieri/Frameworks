@@ -1,4 +1,6 @@
-# menus.py
+"""
+Menu em loop, permite fazer o CRUD dos clientes e livros e organizar os emprestimos
+"""
 import os
 from crud_funcionarios import (
     listar_livros, cadastrar_livro, atualizar_livro, deletar_livro,
