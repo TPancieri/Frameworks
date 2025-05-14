@@ -5,8 +5,6 @@ from library.usuario import Usuario
 
 class Emprestimo(ModeloBase):
     """
-    Liga as relações entre livros e usuários
-    
     id: chave primaria com Auto increment
     livro: referencia para o livro emprestado
     usuario: referencia para o usuario pegando o livro
