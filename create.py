@@ -1,3 +1,7 @@
+"""
+Inicialização do script, cria todos os indexes e tabelas necessárias para o db.
+Roda uma vez quando preparando o programa pela primeira vez
+"""
 from library.config import db
 from library.livro import Livro
 from library.usuario import Usuario
