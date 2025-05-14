@@ -6,6 +6,12 @@ from datetime import datetime
 from peewee import *
 
 class Funcionario(Usuario):
+    """
+    Operações administrativas, incluindo:
+    - CRUD de Cliente
+    - CRUD de Livros
+    - Registro e Retorno de emprestimo
+    """
     class Meta:
         table_name = 'funcionario'
 
