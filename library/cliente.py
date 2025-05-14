@@ -1,3 +1,7 @@
+"""
+Modulo do cliente
+"""
+
 from .usuario import Usuario
 from .livro import Livro
 from .emprestimo import Emprestimo
@@ -5,6 +9,15 @@ from peewee import *
 from datetime import datetime
 
 class Cliente(Usuario):
+    """
+    Inherit do Usuário 
+
+    Operações:
+    - Pegar livro emprestado
+    - Retornar livros
+    - Ver os livros disponiveis
+    - Update na informação pessoal
+    """
     class Meta:
         table_name = 'cliente'
 
