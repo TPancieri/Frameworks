@@ -4,6 +4,16 @@ from library.livro import Livro
 from library.usuario import Usuario
 
 class Emprestimo(ModeloBase):
+    """
+    Liga as relações entre livros e usuários
+    
+    id: chave primaria com Auto increment
+    livro: referencia para o livro emprestado
+    usuario: referencia para o usuario pegando o livro
+    data_emprestimo: data do emprestimo do livro
+    data_devolucao: data da devolução do livro
+    status: status atual do emprestimo ("emprestado" ou "devolvido")
+    """
     id = AutoField() 
     livro = ForeignKeyField(Livro, backref='emprestimos', on_delete='CASCADE')
     usuario = ForeignKeyField(Usuario, backref='emprestimos', on_delete='CASCADE')
