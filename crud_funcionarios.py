@@ -1,4 +1,6 @@
-# crud_funcionario.py
+"""
+Interface das operações CRUD do funcionario
+"""
 from library import *
 from library.livro import Livro
 from library.cliente import Cliente
