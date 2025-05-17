@@ -6,12 +6,6 @@ from datetime import datetime
 from peewee import *
 
 class Funcionario(Usuario):
-    """
-    Operações administrativas, incluindo:
-    - CRUD de Cliente
-    - CRUD de Livros
-    - Registro e Retorno de emprestimo
-    """
     class Meta:
         table_name = 'funcionario'
 
@@ -32,6 +26,18 @@ class Funcionario(Usuario):
         return query.execute()
 
     def deletar_cliente(self, cliente_id):
+        emprestimos_ativos = (Emprestimo
+                            .select()
+                            .where(
+                                (Emprestimo.usuario_id == cliente_id) & 
+                                (Emprestimo.status == 'emprestado')
+                            ))
+        
+        for emprestimo in emprestimos_ativos:
+            livro = emprestimo.livro
+            livro.disponivel = True
+            livro.save()
+        
         return Cliente.delete_by_id(cliente_id)
 
     def ver_livros(self):
@@ -90,5 +96,3 @@ class Funcionario(Usuario):
         livro = emprestimo.livro
         livro.disponivel = True
         livro.save()
-
-#TODO mudar logica de emprestimo, mostrar qual livro esta com quem no listar livros e quais livros alguem tem no listar clientes, nao fazer atualizacao por ID de emprestimo mas por alguma outra coisa (ISBN?)
