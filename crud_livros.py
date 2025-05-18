@@ -5,31 +5,9 @@ from library.funcionario import Funcionario
 def listar_livros():
     print("\n--- LIVROS CADASTRADOS ---")
     for livro in Livro.select():
-        emprestimo_atual = None
-        if not livro.disponivel:
-            try:
-                emprestimo_atual = (Emprestimo
-                                .select().where(
-                                    (Emprestimo.livro == livro) & 
-                                    (Emprestimo.status == 'emprestado')
-                                ).first())
-            except Exception:
-                emprestimo_atual = None
-            
         status = 'Disponível' if livro.disponivel else 'Emprestado'
-        
-        if emprestimo_atual:
-            try:
-                print(f"{livro.isbn} - {livro.titulo}")
-                print(f"    Status: {status}")
-                print(f"    Emprestado para: {emprestimo_atual.usuario.nome} (ID: {emprestimo_atual.usuario.id})")
-                print(f"    Data do empréstimo: {emprestimo_atual.data_emprestimo.strftime('%d/%m/%Y %H:%M')}")
-            except Exception:
-                print(f"{livro.isbn} - {livro.titulo}")
-                print(f"    Status: {status}")
-                print(f"    ERRO: Dados do usuário não encontrados")
-        else:
-            print(f"{livro.isbn} - {livro.titulo} ({status})")
+        print(f"{livro.isbn} - {livro.titulo}")
+        print(f"    Status: {status}")
         print("-" * 50)
     input("\nPressione Enter para voltar ao menu.")
 
