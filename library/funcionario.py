@@ -69,7 +69,7 @@ class Funcionario(Usuario):
             else:
                 raise ValueError("Livro não encontrado.")
     
-    def registrar_emprestimo(self, id_usuario, isbn):
+    def registrar_emprestimo(self, id_usuario, isbn, data_prevista_devolucao):
         livro = Livro.get_or_none(Livro.isbn == isbn)
         usuario = Cliente.get_or_none(Cliente.id == id_usuario)
 
@@ -78,7 +78,11 @@ class Funcionario(Usuario):
         if not livro.disponivel:
             raise ValueError("Livro já está emprestado.")
 
-        Emprestimo.create(livro=livro, usuario=usuario)
+        Emprestimo.create(
+            livro=livro, 
+            usuario=usuario,
+            data_prevista_devolucao=data_prevista_devolucao
+        )
         livro.disponivel = False
         livro.save()
 
