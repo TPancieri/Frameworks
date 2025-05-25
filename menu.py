@@ -7,38 +7,90 @@ from crud_funcionarios import (
     listar_clientes, cadastrar_cliente, atualizar_cliente, deletar_cliente, 
     emprestar_livro, devolver_livro
 )
+from crud_livros import buscar_livros
+from crud_clientes import listar_emprestimos_ativos, listar_clientes_atrasados
 
-def menu_funcionario():
+def menu_livros():
     opcoes = {
         "1": listar_livros,
-        "2": cadastrar_livro,
-        "3": atualizar_livro,
-        "4": deletar_livro,
-        "5": listar_clientes,
-        "6": cadastrar_cliente,
-        "7": atualizar_cliente,
-        "8": deletar_cliente,
-        "9": emprestar_livro,
-        "10": devolver_livro,
-        "0": lambda: print("Saindo do menu funcionário...")
+        "2": buscar_livros,
+        "3": cadastrar_livro,
+        "4": atualizar_livro,
+        "5": deletar_livro,
+        "0": lambda: None
     }
 
     while True:
         os.system('cls' if os.name == 'nt' else 'clear')
-        print("=== SISTEMA DA BIBLIOTECA - FUNCIONÁRIO ===")
+        print("=== OPERAÇÕES DE LIVROS ===")
         print("1. Listar livros")
-        print("2. Cadastrar livro")
-        print("3. Atualizar livro")
-        print("4. Deletar livro")
-        print("5. Listar clientes")
-        print("6. Cadastrar cliente")
-        print("7. Atualizar cliente")
-        print("8. Deletar cliente")
-        print("9. Emprestar livro")
-        print("10. Devolver livro")
+        print("2. Buscar livros")
+        print("3. Cadastrar livro")
+        print("4. Atualizar livro")
+        print("5. Deletar livro")
+        print("0. Voltar ao menu principal")
+
+        opcao = input("\nEscolha uma opção: ")
+
+        acao = opcoes.get(opcao)
+        if acao:
+            if opcao == "0":
+                break
+            acao()
+        else:
+            input("Opção inválida. Pressione Enter para continuar.")
+
+def menu_clientes():
+    opcoes = {
+        "1": listar_clientes,
+        "2": listar_emprestimos_ativos,
+        "3": listar_clientes_atrasados,
+        "4": cadastrar_cliente,
+        "5": atualizar_cliente,
+        "6": deletar_cliente,
+        "7": emprestar_livro,
+        "8": devolver_livro,
+        "0": lambda: None
+    }
+
+    while True:
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("=== OPERAÇÕES DE CLIENTES ===")
+        print("1. Listar clientes")
+        print("2. Listar empréstimos ativos")
+        print("3. Listar clientes com atrasos")
+        print("4. Cadastrar cliente")
+        print("5. Atualizar cliente")
+        print("6. Deletar cliente")
+        print("7. Emprestar livro")
+        print("8. Devolver livro")
+        print("0. Voltar ao menu principal")
+
+        opcao = input("\nEscolha uma opção: ")
+
+        acao = opcoes.get(opcao)
+        if acao:
+            if opcao == "0":
+                break
+            acao()
+        else:
+            input("Opção inválida. Pressione Enter para continuar.")
+
+def menu_funcionario():
+    opcoes = {
+        "1": menu_livros,
+        "2": menu_clientes,
+        "0": lambda: print("Saindo do sistema...")
+    }
+
+    while True:
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("=== SISTEMA DA BIBLIOTECA ===")
+        print("1. Operações de Livros")
+        print("2. Operações de Clientes")
         print("0. Sair")
 
-        opcao = input("Escolha uma opção: ")
+        opcao = input("\nEscolha uma opção: ")
 
         acao = opcoes.get(opcao)
         if acao:
