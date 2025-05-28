@@ -12,8 +12,8 @@ Este é um sistema de gerenciamento de biblioteca desenvolvido em Python, utiliz
 
 1. Clone este repositório:
 ```bash
-git clone [https://github.com/TPancieri/Frameworks.git]
-cd [Frameworks-main]
+git clone https://github.com/TPancieri/Frameworks.git
+cd Frameworks-main
 ```
 
 2. Instale as dependências necessárias:
